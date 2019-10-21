@@ -1,34 +1,65 @@
 # native-url
 
-This module provides the node [url](http://nodejs.org/api/url.html) api layer over the `whatwg-url` class.
+A lightweight implementation of Node's [url](http://nodejs.org/api/url.html) interface atop the [URL API](https://developer.mozilla.org/en-US/docs/Web/API/URL).
 
-**1.45 KB Gzipped**.
+**1.45 KB Gzipped**, works in both Node.js and [modern browsers](https://caniuse.com/#feat=mdn-api_url).
 
-Works both on the server and client.
+## Installation
 
-## Install
-
-`npm i native-url`
+```sh
+npm i native-url
+```
 
 ## Usage
 
 ```
 const url = require('native-url');
 
+url.parse('https://example.com').host // example.com
+url.parse('/?a=b', true).query // { a: 'b' }
 ```
 
-## Apis
+## API
 
-Refer the [node url](https://nodejs.org/api/url.html#url_legacy_url_api) docs for detailed api documentation
+Refer Node's [legacy url documentation](https://nodejs.org/api/url.html#url_legacy_url_api) for detailed API documentation.
 
-### url.parse(urlStr, [parseQueryString], [slashesDenoteHost])
+### `url.parse(urlStr, [parseQueryString], [slashesDenoteHost])`
 
-Takes a URL string, parses it, and returns a URL object.
+Parses a URL string and returns a URL object representation:
 
-### url.format(urlObj)
+```js
+url.parse('https://example.com')
+// {
+//   href: 'http://example.com/',
+//   protocol: 'http:',
+//   slashes: true,
+//   host: 'example.com',
+//   hostname: 'example.com',
+//   query: {},
+//   search: null,
+//   pathname: '/',
+//   path: '/'
+// }
 
-Take a parsed URL object, and returns a URL string.
+url.parse('/foo?a=b', true).query.a  // "b"
+```
 
-### url.resolve(from, to)
+### `url.format(urlObj)`
 
-Resolves a target url wrt the base url
+Given a parsed URL object, returns its corresponding URL string representation:
+
+```js
+url.format({ protocol: 'https', host: 'example.com' });
+// "https://example.com"
+```
+
+### `url.resolve(from, to)`
+
+Resolves a target URL based on the provided base URL:
+
+```js
+url.resolve('/a/b', 'c');
+// "/a/b/c"
+url.resolve('/a/b', '/c#d');
+// "/c#d"
+```
