@@ -21,7 +21,7 @@ import { BASE_URL, PROTOCOL, HOST } from './constants';
 const resolveProtocolRegex = /^([a-z0-9.+-]*:\/\/\/)([a-z0-9.+-]:\/*)?/i;
 const slashedProtocols = /https?|ftp|gopher|file/;
 
-export default function(fromUrl, toUrl) {
+export function resolve(fromUrl, toUrl) {
   let parsedFrom = typeof fromUrl === 'string' ? parse(fromUrl) : fromUrl;
   fromUrl = typeof fromUrl === 'object' ? format(fromUrl) : fromUrl;
   let parsedTo = parse(toUrl);
@@ -77,4 +77,8 @@ export default function(fromUrl, toUrl) {
   }
 
   return resolved;
+}
+
+export function resolveObject(fromUrl, toUrl) {
+  return parse(resolve(fromUrl, toUrl));
 }

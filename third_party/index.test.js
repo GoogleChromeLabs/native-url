@@ -21,11 +21,6 @@
 
 let url = require('../dist');
 
-// For karmatic
-if (url.hasOwnProperty('default')) {
-  url = url.default;
-}
-
 // URLs to parse, and expected data
 // { url : parsed }
 const parseTests = {

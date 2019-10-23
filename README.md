@@ -2,7 +2,7 @@
 
 This module provides the node [url](http://nodejs.org/api/url.html) api layer over the `whatwg-url` class.
 
-**1.45 KB Gzipped**.
+**~1.6 KB Gzipped**.
 
 Works both on the server and client.
 
