@@ -2,7 +2,7 @@
 
 A lightweight implementation of Node's [url](http://nodejs.org/api/url.html) interface atop the [URL API](https://developer.mozilla.org/en-US/docs/Web/API/URL).
 
-**1.45 KB Gzipped**, works in both Node.js and [modern browsers](https://caniuse.com/#feat=mdn-api_url).
+**~1.6 KB Gzipped**, works in both Node.js and [modern browsers](https://caniuse.com/#feat=mdn-api_url).
 
 ## Installation
 
@@ -28,7 +28,7 @@ Refer Node's [legacy url documentation](https://nodejs.org/api/url.html#url_lega
 Parses a URL string and returns a URL object representation:
 
 ```js
-url.parse('https://example.com')
+url.parse('https://example.com');
 // {
 //   href: 'http://example.com/',
 //   protocol: 'http:',
@@ -41,7 +41,7 @@ url.parse('https://example.com')
 //   path: '/'
 // }
 
-url.parse('/foo?a=b', true).query.a  // "b"
+url.parse('/foo?a=b', true).query.a; // "b"
 ```
 
 ### `url.format(urlObj)`
