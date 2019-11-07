@@ -1,5 +1,7 @@
 # native-url
 
+<img src='https://badges.herokuapp.com/browsers?googlechrome=61&firefox=60&safari=10&microsoftedge=16&opera=48'>
+
 A lightweight implementation of Node's [url](http://nodejs.org/api/url.html) interface atop the [URL API](https://developer.mozilla.org/en-US/docs/Web/API/URL).
 
 **~1.6 KB Gzipped**, works in both Node.js and [modern browsers](https://caniuse.com/#feat=mdn-api_url).
@@ -71,7 +73,7 @@ url.resolve('/a/b', '/c#d');
 
 ## Using it with webpack
 
-When you use the `url` module in your project, webpack by default bundles [`node-url`](https://github.com/defunctzombie/node-url) for the client-side. you can alias webpack to use `native-url` instead.
+When you use the `url` module, webpack bundles [`node-url`](https://github.com/defunctzombie/node-url) for the browser. You can alias webpack to use `native-url` instead:
 
 By aliasing the `url` module to `native-url` in your build tool, you can save around 7.5kB.
 
@@ -93,4 +95,4 @@ In you `webpack.config.js`
 
 Fortunately, there is an easier way to address this problem. All [browsers that support `type=module` scripts](https://caniuse.com/#feat=url) have the `URL` class implemented. So you can load the url-polyfill to target only nomodule browsers
 
-`<script nomodule src="url-polyfill"></script>`
+`<script nomodule src="url-polyfill.js"></script>`
