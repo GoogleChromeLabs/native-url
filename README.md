@@ -1,7 +1,5 @@
 # native-url
 
-<img src='https://badges.herokuapp.com/browsers?googlechrome=61&firefox=60&safari=10&microsoftedge=16&opera=48'>
-
 A lightweight implementation of Node's [url](http://nodejs.org/api/url.html) interface atop the [URL API](https://developer.mozilla.org/en-US/docs/Web/API/URL).
 
 **~1.6 KB Gzipped**, works in both Node.js and [modern browsers](https://caniuse.com/#feat=mdn-api_url).
