@@ -1,13 +1,12 @@
 # native-url
 
-A lightweight implementation of Node's [url](http://nodejs.org/api/url.html) interface atop the [URL API](https://developer.mozilla.org/en-US/docs/Web/API/URL).
+A lightweight implementation of Node's [url](http://nodejs.org/api/url.html) interface atop the [URL API](https://developer.mozilla.org/en-US/docs/Web/API/URL). Use it instead of the `url` module to reduce your bundle size by around 7.5 kB.
 
-**~1.6 KB Gzipped**, works in both Node.js and [modern browsers](https://caniuse.com/#feat=mdn-api_url).
+Weighs **1.6 kB gzipped**, works in Node.js 7+ and [all modern browsers](https://caniuse.com/#feat=mdn-api_url):
 
-### Stats from a basic hello world application
+![Chrome 32, Firefox 19, Safari 7, Edge 12, Opera 19](https://badges.herokuapp.com/browsers?googlechrome=32&firefox=19&safari=7&microsoftedge=12&opera=19)
 
-- Normal Build: _13.4 kB_
-- With native-url: _5.95 kB_
+Older browsers can be [easily polyfilled](#polyfill-for-older-browsers) without new browsers loading the code.
 
 ## Installation
 
@@ -17,12 +16,54 @@ npm i native-url
 
 ## Usage
 
-```
+```js
 const url = require('native-url');
 
 url.parse('https://example.com').host // example.com
 url.parse('/?a=b', true).query // { a: 'b' }
 ```
+
+### Usage with Webpack
+
+When you use the `url` module, webpack bundles [`node-url`](https://github.com/defunctzombie/node-url) for the browser. You can alias webpack to use `native-url` instead, saving around 7.5kB:
+
+```js
+// webpack.config.js
+module.exports = {
+  // ...
+  resolve: {
+    alias: {
+      url: 'native-url'
+    }
+  }
+}
+```
+
+The result is **functionally equivalent** in Node 7+ and all modern browsers.
+
+### Usage with Rollup
+
+Rollup does not bundle shims for Node.js modules like `url` by default, but we can add `url` support via `native-url` using aliases:
+
+```js
+// rollup.config.js
+import resolve from 'rollup-plugin-node-resolve';
+import alias from '@rollup/plugin-alias';
+
+module.exports = {
+  // ...
+  plugins: [
+    resolve(),
+    alias({
+      entries: {
+        url: 'native-url'
+      }
+    })
+  ]
+};
+```
+
+With this in place, `import url from 'url'` will use `native-url` and keep your bundle small.
 
 ## API
 
@@ -69,28 +110,12 @@ url.resolve('/a/b', '/c#d');
 // "/c#d"
 ```
 
-## Using it with webpack
+## Polyfill for Older Browsers
 
-When you use the `url` module, webpack bundles [`node-url`](https://github.com/defunctzombie/node-url) for the browser. You can alias webpack to use `native-url` instead:
+`native-url` relies on the DOM [URL API](https://developer.mozilla.org/en-US/docs/Web/API/URL) to work. For older browsers that don't support the `URL` API, a [polyfill](https://www.npmjs.com/package/url-polyfill) is available.
 
-By aliasing the `url` module to `native-url` in your build tool, you can save around 7.5kB.
+Conveniently, a polyfill is never needed for [browsers that support ES Modules](https://caniuse.com/#feat=es6-module), so we can use `<script nomodule>` to conditionally load it for older browsers:
 
-In you `webpack.config.js`
-
+```html
+<script nomodule src="/path/to/url-polyfill.js"></script>
 ```
-{
-  alias: {
-    url: 'native-url'
-  }
-}
-```
-
-**The result is functionally equivalent in Node 7+ and all modern browsers (Chrome 61+, Firefox 60+, Safari 10+, Edge 16+ and anything else with ES Modules support).**
-
-## Using it with older browsers
-
-`native-url` relies on the [whatwg-url](https://developer.mozilla.org/en-US/docs/Web/API/URL) class to work. For browsers that do not support `URL` a [polyfill](https://www.npmjs.com/package/url-polyfill) can be added.
-
-Fortunately, there is an easier way to address this problem. All [browsers that support `type=module` scripts](https://caniuse.com/#feat=url) have the `URL` class implemented. So you can load the url-polyfill to target only nomodule browsers
-
-`<script nomodule src="url-polyfill.js"></script>`
