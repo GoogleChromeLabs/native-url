@@ -120,8 +120,8 @@ export default function(urlStr, parseQs = false, slashesDenoteHost = false) {
   }
 
   res.slashes = slashes && !preSlash;
-  res.host = url.host.includes(HOST) ? '' : url.host;
-  res.hostname = url.hostname.includes(HOST)
+  res.host = ~url.host.indexOf(HOST) ? '' : url.host;
+  res.hostname = ~url.hostname.indexOf(HOST)
     ? ''
     : url.hostname.replace(/(\[|\])/g, '');
   res.protocol = err ? protocolPrefix || null : url.protocol;
@@ -132,7 +132,7 @@ export default function(urlStr, parseQs = false, slashesDenoteHost = false) {
   const hashSplit = urlStr.split('#');
   // Handle case when there is a lone '?' in url
   // Eg: http://example.com/?
-  if (!res.search && hashSplit[0].includes('?')) {
+  if (!res.search && ~hashSplit[0].indexOf('?')) {
     res.search = '?';
   }
   // Similarly handle lone '#' Eg: http://example.com/#
@@ -184,7 +184,7 @@ export default function(urlStr, parseQs = false, slashesDenoteHost = false) {
 
   const excludedKeys = /^(file)/.test(res.href) ? ['host', 'hostname'] : [];
   Object.keys(res).forEach(k => {
-    if (!excludedKeys.includes(k)) res[k] = res[k] || null;
+    if (!~excludedKeys.indexOf(k)) res[k] = res[k] || null;
   });
 
   return res;

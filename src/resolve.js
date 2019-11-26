@@ -63,7 +63,7 @@ export function resolve(fromUrl, toUrl) {
   // Remove unwanted trailing slash
   if (
     !slashedProtocols.test(resolved) &&
-    !toUrl.includes('.') &&
+    !~toUrl.indexOf('.') &&
     fromUrl.slice(-1) !== '/' &&
     toUrl.slice(-1) !== '/' &&
     resolved.slice(-1) === '/'
