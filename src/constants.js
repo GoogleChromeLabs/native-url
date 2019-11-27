@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-export const PROTOCOL = 'xyz://';
-export const PARSE_PROTOCOL = 'http://';
+export const PROTOCOL = 'http://';
 export const HOST = 'w.w';
 export const BASE_URL = PROTOCOL + HOST;
-export const PARSE_BASE_URL = PARSE_PROTOCOL + HOST;
