@@ -16,7 +16,7 @@
 
 import qs from 'querystring';
 import format from './format';
-import { PARSE_BASE_URL, HOST } from './constants';
+import { BASE_URL, HOST } from './constants';
 
 const slashedProtocols = /^https?|ftp|gopher|file/;
 const urlRegex = /^(.+?)([#?].*)/;
@@ -109,7 +109,7 @@ export default function(urlStr, parseQs = false, slashesDenoteHost = false) {
     }
 
     try {
-      url = new URL(urlStr, PARSE_BASE_URL);
+      url = new URL(urlStr, BASE_URL);
     } catch (_) {
       // Unable to parse the url
       // If the URL has only the protocol - Eg: "foo:"

@@ -57,8 +57,16 @@ export function resolve(fromUrl, toUrl) {
   const normalizedFromUrl = new URL(fromUrl, BASE_URL + '/');
   let resolved = new URL(toUrl, normalizedFromUrl)
     .toString()
-    .replace(PROTOCOL, '')
-    .replace(HOST, '');
+    .replace(BASE_URL, '');
+
+  // Remove/replace the protocol if the URL class has added it
+  let actualProtocol = parsedTo.protocol || parsedFrom.protocol;
+  actualProtocol += parsedFrom.slashes || parsedTo.slashes ? '//' : '';
+  if (!prefix && actualProtocol) {
+    resolved = resolved.replace(PROTOCOL, actualProtocol);
+  } else if (prefix) {
+    resolved = resolved.replace(PROTOCOL, '');
+  }
 
   // Remove unwanted trailing slash
   if (
