@@ -1,6 +1,6 @@
 {
   "name": "native-url",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Brings the node url api layer to whatwg-url class",
   "source": "src/index.js",
   "main": "dist/index.js",
