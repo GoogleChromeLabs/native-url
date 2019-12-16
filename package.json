@@ -5,7 +5,7 @@
   "source": "src/index.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  "typings": "index.d.ts",
+  "typings": "third_party/url.d.ts",
   "scripts": {
     "build": "microbundle",
     "test:browser": "karmatic",
@@ -17,9 +17,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "querystring": "^0.2.0"
-  },
-  "peerDependencies": {
-    "@types/node": ">=8.0.0"
   },
   "repository": {
     "type": "git",
