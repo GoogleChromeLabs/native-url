@@ -19,7 +19,7 @@ import format from './format';
 import { BASE_URL, HOST } from './constants';
 
 const slashedProtocols = /^https?|ftp|gopher|file/;
-const urlRegex = /^(.+?)([#?].*)/;
+const urlRegex = /^(.*?)([#?].*)/;
 const protocolRegex = /^([a-z0-9.+-]*:)(\/{0,3})(.*)/i;
 const slashesRegex = /^([a-z0-9.+-]*:)?\/\/\/*/i;
 const ipv6Regex = /^([a-z0-9.+-]*:)(\/{0,2})\[(.*)\]$/i;
@@ -33,13 +33,13 @@ function safeDecode(url) {
 }
 
 export default function(urlStr, parseQs = false, slashesDenoteHost = false) {
-  urlStr = safeDecode(urlStr.trim());
+  urlStr = urlStr.trim();
 
   const slashesMatch = urlStr.match(urlRegex);
   if (slashesMatch) {
-    urlStr = slashesMatch[1].replace(/\\/g, '/') + slashesMatch[2];
+    urlStr = safeDecode(slashesMatch[1]).replace(/\\/g, '/') + slashesMatch[2];
   } else {
-    urlStr = urlStr.replace(/\\/g, '/');
+    urlStr = safeDecode(urlStr).replace(/\\/g, '/');
   }
 
   // IPv6 check
@@ -120,10 +120,9 @@ export default function(urlStr, parseQs = false, slashesDenoteHost = false) {
   }
 
   res.slashes = slashes && !preSlash;
-  res.host = ~url.host.indexOf(HOST) ? '' : url.host;
-  res.hostname = ~url.hostname.indexOf(HOST)
-    ? ''
-    : url.hostname.replace(/(\[|\])/g, '');
+  res.host = url.host === HOST ? '' : url.host;
+  res.hostname =
+    url.hostname === HOST ? '' : url.hostname.replace(/(\[|\])/g, '');
   res.protocol = err ? protocolPrefix || null : url.protocol;
 
   res.search = url.search.replace(/\\/g, '%5C');
