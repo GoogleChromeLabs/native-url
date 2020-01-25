@@ -6,6 +6,12 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "typings": "third_party/url.d.ts",
+  "files": [
+    "dist",
+    "third_party/url.d.ts"
+  ],
+  "unpkg": "dist/index.umd.js",
+  "jsdelivr": "dist/index.umd.js",
   "scripts": {
     "build": "microbundle",
     "test:browser": "karmatic",
