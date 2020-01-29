@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import qs from 'querystring';
+import qs from 'query-string';
 import parse from './parse';
 import format from '../third_party/format';
 

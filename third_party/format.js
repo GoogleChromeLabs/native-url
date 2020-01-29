@@ -41,7 +41,7 @@ export default function(urlObj, qs, slashedProtocols) {
 
   if (query && typeof query === 'object') {
     // query = '' + new URLSearchParams(query);
-    query = qs.encode(query);
+    query = qs.stringify(query);
   }
 
   let search = urlObj.search || (query && `?${query}`) || '';

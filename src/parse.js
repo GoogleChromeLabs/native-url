@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import qs from 'querystring';
+import qs from 'query-string';
 import format from './format';
 import { BASE_URL, HOST } from './constants';
 
@@ -141,7 +141,7 @@ export default function(urlStr, parseQs = false, slashesDenoteHost = false) {
 
   // URLSearchParams is not supported in Edge 16
   // res.query = res.searchParams;
-  res.query = parseQs ? qs.decode(url.search.substr(1)) : res.search.substr(1);
+  res.query = parseQs ? qs.parse(url.search.substr(1)) : res.search.substr(1);
 
   res.pathname = preSlash + safeDecode(url.pathname).replace(/"/g, '%22');
 
