@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+// Ensure that URL constructor is globally available
+// https://nodejs.org/api/globals.html#globals_url
+if (typeof global === 'object') {
+  global.URL = global.URL || require('url').URL;
+}
+
 export { default as parse } from './parse';
 export { default as format } from './format';
 export { resolve, resolveObject } from './resolve';
