@@ -1,4 +1,4 @@
-# native-url
+# native-url [![npm package version](https://badgen.net/npm/v/native-url)](https://npm.im/native-url) [![bundle size](https://badgen.net/bundlephobia/minzip/native-url)](https://bundlephobia.com/result?p=native-url) [![github license](https://badgen.net/github/license/GoogleChromeLabs/native-url)](https://github.com/GoogleChromeLabs/native-url/blob/master/LICENSE)
 
 A lightweight implementation of Node's [url](http://nodejs.org/api/url.html) interface atop the [URL API](https://developer.mozilla.org/en-US/docs/Web/API/URL). Use it instead of the `url` module to reduce your bundle size by around 7.5 kB.
 
