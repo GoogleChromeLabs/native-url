@@ -16,6 +16,7 @@
 
 import qs from 'querystring';
 import format from './format';
+import Url from './url';
 import { BASE_URL, HOST } from './constants';
 
 const slashedProtocols = /^https?|ftp|gopher|file/;
@@ -32,7 +33,10 @@ function safeDecode(url) {
   }
 }
 
-export default function(urlStr, parseQs = false, slashesDenoteHost = false) {
+export default function (urlStr, parseQs = false, slashesDenoteHost = false) {
+  if (urlStr && typeof urlStr === 'object' && urlStr instanceof Url) {
+    return urlStr;
+  }
   urlStr = urlStr.trim();
 
   const slashesMatch = urlStr.match(urlRegex);
@@ -88,7 +92,7 @@ export default function(urlStr, parseQs = false, slashesDenoteHost = false) {
   }
 
   let url;
-  let res = {};
+  let res = new Url();
   let err = '';
   let preSlash = '';
 
@@ -182,7 +186,7 @@ export default function(urlStr, parseQs = false, slashesDenoteHost = false) {
   res.href = preSlash ? `${res.pathname}${res.search}${res.hash}` : format(res);
 
   const excludedKeys = /^(file)/.test(res.href) ? ['host', 'hostname'] : [];
-  Object.keys(res).forEach(k => {
+  Object.keys(res).forEach((k) => {
     if (!~excludedKeys.indexOf(k)) res[k] = res[k] || null;
   });
 

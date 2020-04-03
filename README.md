@@ -19,13 +19,13 @@ npm i native-url
 ```js
 const url = require('native-url');
 
-url.parse('https://example.com').host // example.com
-url.parse('/?a=b', true).query // { a: 'b' }
+url.parse('https://example.com').host; // example.com
+url.parse('/?a=b', true).query; // { a: 'b' }
 ```
 
 ### Usage with Webpack
 
-When you use the `url` module, webpack bundles [`node-url`](https://github.com/defunctzombie/node-url) for the browser. You can alias webpack to use `native-url` instead, saving around 7.5kB:
+When you use the `url` module, webpack bundles [`node-url`](https://githu b.com/defunctzombie/node-url) for the browser. You can alias webpack to use `native-url` instead, saving around 7.5kB:
 
 ```js
 // webpack.config.js
@@ -36,7 +36,7 @@ module.exports = {
       url: 'native-url'
     }
   }
-}
+};
 ```
 
 The result is **functionally equivalent** in Node 7+ and all modern browsers.

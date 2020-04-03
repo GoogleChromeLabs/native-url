@@ -14,7 +14,15 @@
  * limitations under the License.
  */
 
-export { default as parse } from './parse';
-export { default as format } from './format';
-export { resolve, resolveObject } from './resolve';
-export { default as Url } from './url';
+import parse from './parse';
+import format from './format';
+import { resolve, resolveObject } from './resolve';
+
+class Url {
+  static parse = parse;
+  static format = format;
+  static resolve = resolve;
+  static resolveObject = resolve;
+}
+
+export default Url;
