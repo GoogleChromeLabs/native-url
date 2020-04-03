@@ -18,11 +18,8 @@ import parse from './parse';
 import format from './format';
 import { resolve, resolveObject } from './resolve';
 
-class Url {
-  static parse = parse;
-  static format = format;
-  static resolve = resolve;
-  static resolveObject = resolve;
-}
-
-export default Url;
+export default function Url() {}
+Url.parse = parse;
+Url.format = format;
+Url.resolve = resolve;
+Url.resolveObject = resolve;
