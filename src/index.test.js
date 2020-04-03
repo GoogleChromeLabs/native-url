@@ -84,6 +84,7 @@ describe('Basic parse and format:', () => {
       const actual = url.parse(u);
       const spaced = url.parse('     \t  ' + u + '\n\t');
       const expected = parseTests[u];
+      const reparsed = url.parse(actual);
 
       Object.keys(actual).forEach((i) => {
         if (expected[i] === undefined && actual[i] === null) {
@@ -95,6 +96,7 @@ describe('Basic parse and format:', () => {
       // Jasmine's toEqual fails when comparing an instance with and object
       expect({ ...actual }).toEqual(expected);
       expect({ ...spaced }).toEqual(expected);
+      expect({ ...reparsed }).toEqual(expected);
     });
 
     it(`format(${u}):`, () => {
