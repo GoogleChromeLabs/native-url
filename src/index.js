@@ -14,6 +14,27 @@
  * limitations under the License.
  */
 
+let root;
+if (typeof window !== 'undefined') {
+  root = window;
+} else if (typeof global !== 'undefined') {
+  /**
+   * Ensure that `URL` & `URLSearchParams` constructors are globally available
+   * @see https://nodejs.org/api/globals.html#globals_url
+   * @see https://nodejs.org/api/globals.html#globals_urlsearchparams
+   */
+  const { URL, URLSearchParams } = require('url');
+  global.URL = global.URL || URL;
+  global.URLSearchParams = global.URLSearchParams || URLSearchParams;
+  root = global;
+} else if (typeof self !== 'undefined') {
+  root = self;
+} else {
+  root = this;
+}
+
 export { default as parse } from './parse';
 export { default as format } from './format';
 export { resolve, resolveObject } from './resolve';
+export const { URL } = root;
+export const { URLSearchParams } = root;
