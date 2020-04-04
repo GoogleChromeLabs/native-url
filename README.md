@@ -19,8 +19,8 @@ npm i native-url
 ```js
 const url = require('native-url');
 
-url.parse('https://example.com').host // example.com
-url.parse('/?a=b', true).query // { a: 'b' }
+url.parse('https://example.com').host; // example.com
+url.parse('/?a=b', true).query; // { a: 'b' }
 ```
 
 ### Usage with Webpack
@@ -33,10 +33,10 @@ module.exports = {
   // ...
   resolve: {
     alias: {
-      url: 'native-url'
-    }
-  }
-}
+      url: 'native-url',
+    },
+  },
+};
 ```
 
 The result is **functionally equivalent** in Node 7+ and all modern browsers.
@@ -56,10 +56,10 @@ module.exports = {
     resolve(),
     alias({
       entries: {
-        url: 'native-url'
-      }
-    })
-  ]
+        url: 'native-url',
+      },
+    }),
+  ],
 };
 ```
 

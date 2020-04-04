@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
-export { default as parse } from './parse';
-export { default as format } from './format';
-export { resolve, resolveObject } from './resolve';
-export { default as Url } from './url';
+import parse from './parse';
+import format from './format';
+import { resolve, resolveObject } from './resolve';
+
+export default function Url() {}
+Url.parse = parse;
+Url.format = format;
+Url.resolve = resolve;
+Url.resolveObject = resolve;

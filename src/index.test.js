@@ -3,7 +3,7 @@ let {
   parseTestsWithQueryString,
   formatTests,
   relativeTests,
-  relativeTests2
+  relativeTests2,
 } = require('../third_party/test_cases');
 let url = require('../dist');
 
@@ -18,7 +18,7 @@ parseTests = {
     query: 'test=space%20',
     pathname: '/hello',
     path: '/hello?test=space%20',
-    href: 'https://google.com/hello?test=space%20'
+    href: 'https://google.com/hello?test=space%20',
   },
   '?percent=%25': {
     protocol: null,
@@ -32,7 +32,7 @@ parseTests = {
     query: 'percent=%25',
     pathname: null,
     path: '?percent=%25',
-    href: '?percent=%25'
+    href: '?percent=%25',
   },
   [`?lf=before${encodeURI('\n')}after`]: {
     protocol: null,
@@ -46,7 +46,7 @@ parseTests = {
     query: 'lf=before%0Aafter',
     pathname: null,
     path: '?lf=before%0Aafter',
-    href: '?lf=before%0Aafter'
+    href: '?lf=before%0Aafter',
   },
   'https://www.w.org': {
     protocol: 'https:',
@@ -60,7 +60,7 @@ parseTests = {
     query: null,
     pathname: '/',
     path: '/',
-    href: 'https://www.w.org/'
+    href: 'https://www.w.org/',
   },
   'https://www.wikipedia.org/': {
     protocol: 'https:',
@@ -74,25 +74,29 @@ parseTests = {
     query: null,
     pathname: '/',
     path: '/',
-    href: 'https://www.wikipedia.org/'
-  }
+    href: 'https://www.wikipedia.org/',
+  },
 };
 
 describe('Basic parse and format:', () => {
-  Object.keys(parseTests).forEach(function(u) {
+  Object.keys(parseTests).forEach(function (u) {
     it(`parse(${u}):`, () => {
       const actual = url.parse(u);
       const spaced = url.parse('     \t  ' + u + '\n\t');
       const expected = parseTests[u];
+      const reparsed = url.parse(actual);
 
-      Object.keys(actual).forEach(i => {
+      Object.keys(actual).forEach((i) => {
         if (expected[i] === undefined && actual[i] === null) {
           expected[i] = null;
         }
       });
 
-      expect(actual).toEqual(expected);
-      expect(spaced).toEqual(expected);
+      // The parsed object is an instanceof Url
+      // Jasmine's toEqual fails when comparing an instance with and object
+      expect({ ...actual }).toEqual(expected);
+      expect({ ...spaced }).toEqual(expected);
+      expect({ ...reparsed }).toEqual(expected);
     });
 
     it(`format(${u}):`, () => {
@@ -105,24 +109,24 @@ describe('Basic parse and format:', () => {
 });
 
 describe('With querystring:', () => {
-  Object.keys(parseTestsWithQueryString).forEach(function(u) {
+  Object.keys(parseTestsWithQueryString).forEach(function (u) {
     it(`parse(${u}):`, () => {
       const actual = url.parse(u, true);
       const expected = parseTestsWithQueryString[u];
 
-      Object.keys(actual).forEach(i => {
+      Object.keys(actual).forEach((i) => {
         if (expected[i] === undefined && actual[i] === null) {
           expected[i] = null;
         }
       });
 
-      expect(actual).toEqual(expected);
+      expect({ ...actual }).toEqual(expected);
     });
   });
 });
 
 describe('Test format():', () => {
-  Object.keys(formatTests).forEach(function(u) {
+  Object.keys(formatTests).forEach(function (u) {
     const expected = formatTests[u].href;
     it(`format(${u}):`, () => {
       const actual = url.format(u);
@@ -140,7 +144,7 @@ describe('Test format():', () => {
 });
 
 describe('Test resolve():', () => {
-  relativeTests.forEach(function(relativeTest) {
+  relativeTests.forEach(function (relativeTest) {
     it(`resolve(${relativeTest[0]}, ${relativeTest[1]}):`, () => {
       const actual = url.resolve(relativeTest[0], relativeTest[1]);
       const expected = relativeTest[2];
@@ -151,7 +155,7 @@ describe('Test resolve():', () => {
 });
 
 // https://github.com/joyent/node/issues/568
-[undefined, null, true, false, 0.0, 0, [], {}].forEach(function(val) {
+[undefined, null, true, false, 0.0, 0, [], {}].forEach(function (val) {
   describe('Test [undefined, null, true, false, 0.0, 0, [], {}] values:', () => {
     it(`parse(${val})`, () => {
       expect(() => {
@@ -162,7 +166,7 @@ describe('Test resolve():', () => {
 });
 
 describe('Test wonky resolves:', () => {
-  relativeTests2.forEach(function(relativeTest) {
+  relativeTests2.forEach(function (relativeTest) {
     it(`resolve(${relativeTest[1]}, ${relativeTest[0]}):`, () => {
       const actual = url.resolve(relativeTest[1], relativeTest[0]);
       const expected = relativeTest[2];
@@ -173,7 +177,7 @@ describe('Test wonky resolves:', () => {
 });
 
 describe('Test resolveObject:', () => {
-  relativeTests.forEach(function(relativeTest) {
+  relativeTests.forEach(function (relativeTest) {
     it(`resolveObject(${relativeTest[0]}, ${relativeTest[1]}):`, () => {
       let actual = url.resolveObject(relativeTest[0], relativeTest[1]);
       let expected = url.parse(relativeTest[2]);
@@ -206,7 +210,7 @@ if (
 }
 
 describe('Test wonky resolveObject:', () => {
-  relativeTests2.forEach(function(relativeTest) {
+  relativeTests2.forEach(function (relativeTest) {
     it(`resolveObject(${relativeTest[1]}, ${relativeTest[0]}):`, () => {
       let actual = url.resolveObject(
         url.parse(relativeTest[1]),
