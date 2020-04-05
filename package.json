@@ -17,7 +17,8 @@
     "test:browser": "karmatic",
     "test:node": "jest",
     "pretest": "yarn run build",
-    "test": "jest && karmatic"
+    "test": "jest && karmatic",
+    "release": "release-it"
   },
   "author": "Janicklas Ralph",
   "license": "Apache-2.0",
