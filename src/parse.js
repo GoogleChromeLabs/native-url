@@ -83,7 +83,7 @@ export default function (urlStr, parseQs = false, slashesDenoteHost = false) {
   }
 
   // If port is 80 we change it to 8000 and undo it later
-  let portMatch = urlStr.match(/(:[0-9]+)/);
+  let portMatch = (slashesMatch ? slashesMatch[1] : urlStr).match(/(:[0-9]+)/);
   let portSuffix = '';
 
   if (portMatch && portMatch[1] && portMatch[1].length === 3) {

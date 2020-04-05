@@ -108,6 +108,24 @@ describe('Basic parse and format:', () => {
   });
 });
 
+parseTestsWithQueryString = {
+  ...parseTestsWithQueryString,
+  '/example?query=size:10': {
+    protocol: null,
+    slashes: null,
+    auth: null,
+    host: null,
+    port: null,
+    hostname: null,
+    hash: null,
+    search: '?query=size:10',
+    query: { query: 'size:10' },
+    pathname: '/example',
+    path: '/example?query=size:10',
+    href: '/example?query=size:10',
+  },
+};
+
 describe('With querystring:', () => {
   Object.keys(parseTestsWithQueryString).forEach(function (u) {
     it(`parse(${u}):`, () => {
