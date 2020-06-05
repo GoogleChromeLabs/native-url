@@ -19,7 +19,7 @@ import format from './format';
 import { resolve, resolveObject } from './resolve';
 
 export default function Url() {}
-Url.parse = parse;
-Url.format = format;
-Url.resolve = resolve;
-Url.resolveObject = resolve;
+Url.prototype.parse = parse;
+Url.prototype.format = format;
+Url.prototype.resolve = resolve;
+Url.prototype.resolveObject = resolve;
