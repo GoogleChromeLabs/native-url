@@ -28,7 +28,7 @@ const ipv6Regex = /^([a-z0-9.+-]*:)(\/{0,2})\[(.*)\]$/i;
 function decodePath(url) {
   return url.replace(/((?:%[0-9A-F]{2})+)/g, (_, seq) => {
     try {
-      const decoded = decodeURIComponent(seq);
+      const decoded = decodeURI(seq);
       return '"%/:'.includes(decoded) ? seq : decoded;
     } catch (_) {
       return seq;
