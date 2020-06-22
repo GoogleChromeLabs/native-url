@@ -29,7 +29,7 @@ function decodePath(url) {
   return url.replace(/((?:%[0-9A-F]{2})+)/g, (_, seq) => {
     try {
       const decoded = decodeURI(seq);
-      return '"%/:'.includes(decoded) ? seq : decoded;
+      return '"%'.includes(decoded) ? seq : decoded;
     } catch (_) {
       return seq;
     }
