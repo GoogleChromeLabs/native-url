@@ -76,6 +76,20 @@ parseTests = {
     path: '/',
     href: 'https://www.wikipedia.org/',
   },
+  'https://x.x/hello%25world': {
+    protocol: 'https:',
+    slashes: true,
+    auth: null,
+    host: 'x.x',
+    port: null,
+    hostname: 'x.x',
+    hash: null,
+    search: null,
+    query: null,
+    pathname: '/hello%25world',
+    path: '/hello%25world',
+    href: 'https://x.x/hello%25world',
+  },
 };
 
 describe('Basic parse and format:', () => {
