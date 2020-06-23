@@ -84,14 +84,9 @@ export default function (urlStr, parseQs = false, slashesDenoteHost = false) {
 
   // If port is 80 we change it to 8000 and undo it later
   let portMatch = (slashesMatch ? slashesMatch[1] : urlStr).match(
-    /^https?:\/\/[^/]+(:[0-9]+)/
+    /^https?:\/\/[^/]+(:[0-9]+)(?=\/|$)/
   );
-  let portSuffix = '';
-
-  if (portMatch && portMatch[1] && portMatch[1].length === 3) {
-    portSuffix = portMatch[1];
-    urlStr = urlStr.replace(portSuffix, `${portSuffix}00`);
-  }
+  let portSuffix = portMatch && portMatch[1];
 
   let url;
   let res = new Url();
@@ -179,10 +174,10 @@ export default function (urlStr, parseQs = false, slashesDenoteHost = false) {
     .join(':');
   res.port = url.port;
 
-  // Undo port to its original value, 8000 -> 80
-  if (portSuffix) {
-    res.host = res.host.replace(`${portSuffix}00`, portSuffix);
-    res.port = res.port.slice(0, -2);
+  // Make sure to include default ports if they were specified
+  if (portSuffix && !res.host.endsWith(portSuffix)) {
+    res.host = res.host += portSuffix;
+    res.port = res.port = portSuffix.slice(1);
   }
 
   res.href = preSlash ? `${res.pathname}${res.search}${res.hash}` : format(res);
