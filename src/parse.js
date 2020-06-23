@@ -176,8 +176,8 @@ export default function (urlStr, parseQs = false, slashesDenoteHost = false) {
 
   // Make sure to include default ports if they were specified
   if (portSuffix && !res.host.endsWith(portSuffix)) {
-    res.host = res.host += portSuffix;
-    res.port = res.port = portSuffix.slice(1);
+    res.host += portSuffix;
+    res.port = portSuffix.slice(1);
   }
 
   res.href = preSlash ? `${res.pathname}${res.search}${res.hash}` : format(res);
