@@ -25,12 +25,15 @@ const protocolRegex = /^([a-z0-9.+-]*:)(\/{0,3})(.*)/i;
 const slashesRegex = /^([a-z0-9.+-]*:)?\/\/\/*/i;
 const ipv6Regex = /^([a-z0-9.+-]*:)(\/{0,2})\[(.*)\]$/i;
 
-function safeDecode(url) {
-  try {
-    return decodeURI(url);
-  } catch (_) {
-    return url;
-  }
+function decodePath(url) {
+  return url.replace(/((?:%[0-9A-F]{2})+)/g, (_, seq) => {
+    try {
+      const decoded = decodeURI(seq);
+      return '"%'.includes(decoded) ? seq : decoded;
+    } catch (_) {
+      return seq;
+    }
+  });
 }
 
 export default function (urlStr, parseQs = false, slashesDenoteHost = false) {
@@ -41,9 +44,9 @@ export default function (urlStr, parseQs = false, slashesDenoteHost = false) {
 
   const slashesMatch = urlStr.match(urlRegex);
   if (slashesMatch) {
-    urlStr = safeDecode(slashesMatch[1]).replace(/\\/g, '/') + slashesMatch[2];
+    urlStr = slashesMatch[1].replace(/\\/g, '/') + slashesMatch[2];
   } else {
-    urlStr = safeDecode(urlStr).replace(/\\/g, '/');
+    urlStr = urlStr.replace(/\\/g, '/');
   }
 
   // IPv6 check
@@ -144,7 +147,7 @@ export default function (urlStr, parseQs = false, slashesDenoteHost = false) {
   // res.query = res.searchParams;
   res.query = parseQs ? qs.decode(url.search.substr(1)) : res.search.substr(1);
 
-  res.pathname = preSlash + safeDecode(url.pathname).replace(/"/g, '%22');
+  res.pathname = preSlash + decodePath(url.pathname);
 
   // Chrome parses "#abc" as "about:blank#abc"
   if (res.protocol === 'about:' && res.pathname === 'blank') {
