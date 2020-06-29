@@ -303,6 +303,20 @@ parseTests = {
     href:
       'https://x.x/hello!%22$%25&%27()*+,./:;%3C=%3E@%5B%5D%20%5E_%60%7B%7C%7D~-world',
   },
+  '/hello%20world%20': {
+    protocol: null,
+    slashes: null,
+    auth: null,
+    host: null,
+    port: null,
+    hostname: null,
+    hash: null,
+    search: null,
+    query: null,
+    pathname: '/hello%20world%20',
+    path: '/hello%20world%20',
+    href: '/hello%20world%20',
+  },
 };
 
 describe('Basic parse and format:', () => {
