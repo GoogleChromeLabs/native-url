@@ -232,17 +232,10 @@ exports.parseTests = {
     path: '/p/%22quoted%22'
   },
 
-  // This is parsed as the next test case
-  // "<http://goo.corn/bread> Is a URL!": {
-  //   href: "%3Chttp://goo.corn/bread%3E%20Is%20a%20URL!",
-  //   pathname: "%3Chttp://goo.corn/bread%3E%20Is%20a%20URL!",
-  //   path: "%3Chttp://goo.corn/bread%3E%20Is%20a%20URL!"
-  // },
-
-  '<http://goo.corn/bread> Is a URL!': {
-    href: '<http://goo.corn/bread> Is a URL!',
-    pathname: '<http://goo.corn/bread> Is a URL!',
-    path: '<http://goo.corn/bread> Is a URL!'
+  "<http://goo.corn/bread> Is a URL!": {
+    href: "%3Chttp://goo.corn/bread%3E%20Is%20a%20URL!",
+    pathname: "%3Chttp://goo.corn/bread%3E%20Is%20a%20URL!",
+    path: "%3Chttp://goo.corn/bread%3E%20Is%20a%20URL!"
   },
 
   'http://www.narwhaljs.org/blog/categories?id=news': {
