@@ -34,7 +34,6 @@ function decodePath(url) {
     .replace(/((?:%[0-9A-F]{2})+)/g, (_, seq) => {
       try {
         const decoded = decodeURIComponent(seq);
-        // console.log(seq, decoded)
         return decoded
           .split('')
           .map((char) => {
@@ -100,7 +99,6 @@ export default function (urlStr, parseQs = false, slashesDenoteHost = false) {
     }
   }
 
-  // If port is 80 we change it to 8000 and undo it later
   let portMatch = (slashesMatch ? slashesMatch[1] : urlStr).match(
     /^https?:\/\/[^/]+(:[0-9]+)(?=\/|$)/
   );
