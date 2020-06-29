@@ -26,14 +26,29 @@ const slashesRegex = /^([a-z0-9.+-]*:)?\/\/\/*/i;
 const ipv6Regex = /^([a-z0-9.+-]*:)(\/{0,2})\[(.*)\]$/i;
 
 function decodePath(url) {
-  return url.replace(/((?:%[0-9A-F]{2})+)/g, (_, seq) => {
-    try {
-      const decoded = decodeURI(seq);
-      return '"%'.includes(decoded) ? seq : decoded;
-    } catch (_) {
-      return seq;
-    }
-  });
+  return url
+    .replace(
+      /['^|`]/g,
+      (char) => '%' + char.charCodeAt().toString(16).toUpperCase()
+    )
+    .replace(/((?:%[0-9A-F]{2})+)/g, (_, seq) => {
+      try {
+        const decoded = decodeURIComponent(seq);
+        // console.log(seq, decoded)
+        return decoded
+          .split('')
+          .map((char) => {
+            const code = char.charCodeAt();
+            if (code > 256 || /^[a-z0-9]$/i.test(char)) {
+              return char;
+            }
+            return '%' + code.toString(16).toUpperCase();
+          })
+          .join('');
+      } catch (_) {
+        return seq;
+      }
+    });
 }
 
 export default function (urlStr, parseQs = false, slashesDenoteHost = false) {
@@ -147,7 +162,8 @@ export default function (urlStr, parseQs = false, slashesDenoteHost = false) {
   // res.query = res.searchParams;
   res.query = parseQs ? qs.decode(url.search.substr(1)) : res.search.substr(1);
 
-  res.pathname = preSlash + decodePath(url.pathname);
+  res.pathname =
+    preSlash + (protocolMatch ? decodePath(url.pathname) : url.pathname);
 
   // Chrome parses "#abc" as "about:blank#abc"
   if (res.protocol === 'about:' && res.pathname === 'blank') {
