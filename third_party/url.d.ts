@@ -141,3 +141,5 @@ declare module 'url' {
     [Symbol.iterator](): IterableIterator<[string, string]>;
   }
 }
+
+export {};
