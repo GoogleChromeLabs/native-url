@@ -18,3 +18,5 @@ export { default as parse } from './parse';
 export { default as format } from './format';
 export { resolve, resolveObject } from './resolve';
 export { default as Url } from './url';
+export { URL as URL }
+export { URLSearchParams as URLSearchParams }
