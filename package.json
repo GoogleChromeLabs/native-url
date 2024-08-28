@@ -54,7 +54,7 @@
     "microbundle": "^0.11.0",
     "prettier": "^2.0.2",
     "release-it": "^13.5.1",
-    "webpack": "^4.41.2"
+    "webpack": "^5.94.0"
   },
   "lint-staged": {
     "{src,tests}/**/*.js": [
